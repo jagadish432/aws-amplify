@@ -9,10 +9,14 @@ import { AmplifyUIAngularModule } from '@aws-amplify/ui-angular';
 
 /* new form imports */
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PostsComponent } from './posts/posts.component';
+import { RestaurantsComponent } from './restaurants/restaurants.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PostsComponent,
+    RestaurantsComponent
   ],
   imports: [
     BrowserModule,
