@@ -1,0 +1,35 @@
+{
+    "paths": [
+        {
+            "name": "/posts",
+            "lambdaFunction": "postsLambda",
+            "privacy": {
+                "open": true
+            },
+            "policyResourceName": "/posts"
+        }
+    ],
+    "resourceName": "postsAPI",
+    "apiName": "postsAPI",
+    "functionArns": [
+        {
+            "lambdaFunction": "postsLambda"
+        }
+    ],
+    "privacy": {
+        "auth": 0,
+        "unauth": 0,
+        "authRoleName": "amplify-amplifyapp-dev-180730-authRole",
+        "unAuthRoleName": "amplify-amplifyapp-dev-180730-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "postsLambda",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ]
+}
