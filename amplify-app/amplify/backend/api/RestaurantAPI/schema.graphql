@@ -4,3 +4,10 @@ type Restaurant @model {
   description: String!
   city: String!
 }
+
+type Post @model {
+  id: ID!
+  name: String!
+  description: String!
+  owner: String!
+}

@@ -75,6 +75,33 @@ export type DeleteRestaurantInput = {
   id?: string | null;
 };
 
+export type CreatePostInput = {
+  id?: string | null;
+  name: string;
+  description: string;
+  owner: string;
+};
+
+export type ModelPostConditionInput = {
+  name?: ModelStringInput | null;
+  description?: ModelStringInput | null;
+  owner?: ModelStringInput | null;
+  and?: Array<ModelPostConditionInput | null> | null;
+  or?: Array<ModelPostConditionInput | null> | null;
+  not?: ModelPostConditionInput | null;
+};
+
+export type UpdatePostInput = {
+  id: string;
+  name?: string | null;
+  description?: string | null;
+  owner?: string | null;
+};
+
+export type DeletePostInput = {
+  id?: string | null;
+};
+
 export type ModelRestaurantFilterInput = {
   id?: ModelIDInput | null;
   name?: ModelStringInput | null;
@@ -99,6 +126,16 @@ export type ModelIDInput = {
   attributeExists?: boolean | null;
   attributeType?: ModelAttributeTypes | null;
   size?: ModelSizeInput | null;
+};
+
+export type ModelPostFilterInput = {
+  id?: ModelIDInput | null;
+  name?: ModelStringInput | null;
+  description?: ModelStringInput | null;
+  owner?: ModelStringInput | null;
+  and?: Array<ModelPostFilterInput | null> | null;
+  or?: Array<ModelPostFilterInput | null> | null;
+  not?: ModelPostFilterInput | null;
 };
 
 export type CreateRestaurantMutation = {
@@ -131,6 +168,36 @@ export type DeleteRestaurantMutation = {
   updatedAt: string;
 };
 
+export type CreatePostMutation = {
+  __typename: "Post";
+  id: string;
+  name: string;
+  description: string;
+  owner: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type UpdatePostMutation = {
+  __typename: "Post";
+  id: string;
+  name: string;
+  description: string;
+  owner: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type DeletePostMutation = {
+  __typename: "Post";
+  id: string;
+  name: string;
+  description: string;
+  owner: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
 export type GetRestaurantQuery = {
   __typename: "Restaurant";
   id: string;
@@ -149,6 +216,30 @@ export type ListRestaurantsQuery = {
     name: string;
     description: string;
     city: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null> | null;
+  nextToken: string | null;
+};
+
+export type GetPostQuery = {
+  __typename: "Post";
+  id: string;
+  name: string;
+  description: string;
+  owner: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type ListPostsQuery = {
+  __typename: "ModelPostConnection";
+  items: Array<{
+    __typename: "Post";
+    id: string;
+    name: string;
+    description: string;
+    owner: string;
     createdAt: string;
     updatedAt: string;
   } | null> | null;
@@ -181,6 +272,36 @@ export type OnDeleteRestaurantSubscription = {
   name: string;
   description: string;
   city: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type OnCreatePostSubscription = {
+  __typename: "Post";
+  id: string;
+  name: string;
+  description: string;
+  owner: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type OnUpdatePostSubscription = {
+  __typename: "Post";
+  id: string;
+  name: string;
+  description: string;
+  owner: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type OnDeletePostSubscription = {
+  __typename: "Post";
+  id: string;
+  name: string;
+  description: string;
+  owner: string;
   createdAt: string;
   updatedAt: string;
 };
@@ -267,6 +388,84 @@ export class APIService {
     )) as any;
     return <DeleteRestaurantMutation>response.data.deleteRestaurant;
   }
+  async CreatePost(
+    input: CreatePostInput,
+    condition?: ModelPostConditionInput
+  ): Promise<CreatePostMutation> {
+    const statement = `mutation CreatePost($input: CreatePostInput!, $condition: ModelPostConditionInput) {
+        createPost(input: $input, condition: $condition) {
+          __typename
+          id
+          name
+          description
+          owner
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <CreatePostMutation>response.data.createPost;
+  }
+  async UpdatePost(
+    input: UpdatePostInput,
+    condition?: ModelPostConditionInput
+  ): Promise<UpdatePostMutation> {
+    const statement = `mutation UpdatePost($input: UpdatePostInput!, $condition: ModelPostConditionInput) {
+        updatePost(input: $input, condition: $condition) {
+          __typename
+          id
+          name
+          description
+          owner
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <UpdatePostMutation>response.data.updatePost;
+  }
+  async DeletePost(
+    input: DeletePostInput,
+    condition?: ModelPostConditionInput
+  ): Promise<DeletePostMutation> {
+    const statement = `mutation DeletePost($input: DeletePostInput!, $condition: ModelPostConditionInput) {
+        deletePost(input: $input, condition: $condition) {
+          __typename
+          id
+          name
+          description
+          owner
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <DeletePostMutation>response.data.deletePost;
+  }
   async GetRestaurant(id: string): Promise<GetRestaurantQuery> {
     const statement = `query GetRestaurant($id: ID!) {
         getRestaurant(id: $id) {
@@ -322,6 +521,61 @@ export class APIService {
     )) as any;
     return <ListRestaurantsQuery>response.data.listRestaurants;
   }
+  async GetPost(id: string): Promise<GetPostQuery> {
+    const statement = `query GetPost($id: ID!) {
+        getPost(id: $id) {
+          __typename
+          id
+          name
+          description
+          owner
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      id
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <GetPostQuery>response.data.getPost;
+  }
+  async ListPosts(
+    filter?: ModelPostFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<ListPostsQuery> {
+    const statement = `query ListPosts($filter: ModelPostFilterInput, $limit: Int, $nextToken: String) {
+        listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            name
+            description
+            owner
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <ListPostsQuery>response.data.listPosts;
+  }
   OnCreateRestaurantListener: Observable<
     SubscriptionResponse<OnCreateRestaurantSubscription>
   > = API.graphql(
@@ -375,4 +629,58 @@ export class APIService {
       }`
     )
   ) as Observable<SubscriptionResponse<OnDeleteRestaurantSubscription>>;
+
+  OnCreatePostListener: Observable<
+    SubscriptionResponse<OnCreatePostSubscription>
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnCreatePost {
+        onCreatePost {
+          __typename
+          id
+          name
+          description
+          owner
+          createdAt
+          updatedAt
+        }
+      }`
+    )
+  ) as Observable<SubscriptionResponse<OnCreatePostSubscription>>;
+
+  OnUpdatePostListener: Observable<
+    SubscriptionResponse<OnUpdatePostSubscription>
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnUpdatePost {
+        onUpdatePost {
+          __typename
+          id
+          name
+          description
+          owner
+          createdAt
+          updatedAt
+        }
+      }`
+    )
+  ) as Observable<SubscriptionResponse<OnUpdatePostSubscription>>;
+
+  OnDeletePostListener: Observable<
+    SubscriptionResponse<OnDeletePostSubscription>
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnDeletePost {
+        onDeletePost {
+          __typename
+          id
+          name
+          description
+          owner
+          createdAt
+          updatedAt
+        }
+      }`
+    )
+  ) as Observable<SubscriptionResponse<OnDeletePostSubscription>>;
 }

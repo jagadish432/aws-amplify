@@ -29,3 +29,33 @@ subscription OnDeleteRestaurant {
     updatedAt
   }
 }
+subscription OnCreatePost {
+  onCreatePost {
+    id
+    name
+    description
+    owner
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdatePost {
+  onUpdatePost {
+    id
+    name
+    description
+    owner
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeletePost {
+  onDeletePost {
+    id
+    name
+    description
+    owner
+    createdAt
+    updatedAt
+  }
+}

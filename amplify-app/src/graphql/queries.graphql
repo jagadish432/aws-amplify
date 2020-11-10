@@ -26,3 +26,30 @@ query ListRestaurants(
     nextToken
   }
 }
+query GetPost($id: ID!) {
+  getPost(id: $id) {
+    id
+    name
+    description
+    owner
+    createdAt
+    updatedAt
+  }
+}
+query ListPosts(
+  $filter: ModelPostFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      name
+      description
+      owner
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}
