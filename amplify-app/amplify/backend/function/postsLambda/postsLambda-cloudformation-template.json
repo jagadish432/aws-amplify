@@ -68,8 +68,8 @@
         "Layers": [],
         "Timeout": "25",
         "Code": {
-          "S3Bucket": "amplify-amplifyapp-dev-180730-deployment",
-          "S3Key": "amplify-builds/postsLambda-4a727464756568646478-build.zip"
+          "S3Bucket": "amplify-amplifyapp-test-152102-deployment",
+          "S3Key": "amplify-builds/postsLambda-364e48596c3368444a56-build.zip"
         }
       }
     },
